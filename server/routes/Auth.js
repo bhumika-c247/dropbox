@@ -30,6 +30,8 @@ const storage = multer.diskStorage({
 const upload =multer({storage:storage})
 authRouter.post('/upload',upload.array("file"), FileController.createFile)
 authRouter.post('/deleteFile', FileController.deleteFile)
+authRouter.post('/getAllFile', FileController.getAllfile)
+
 
 
 

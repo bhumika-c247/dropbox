@@ -37,8 +37,18 @@ const deleteFile = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+const getAllfile = async (req, res) => {
+  const {userId} =req.body
+  try {
+    const allFiles = await users.find({ _id: userId });
+    res.json({ data: allFiles, status: "success" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 const FileController = {
   createFile,
   deleteFile,
+  getAllfile,
 };
 export default FileController;
