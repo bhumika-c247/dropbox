@@ -2,16 +2,31 @@ import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from "axios";
 
 export const Login = () => {
+
+   
     let navigate = useNavigate();
+    const [user , setUser]= useState();
 
+  const onFinish = async (values) => {
 
-  const onFinish = (values) => {
+    try {
+        const response = await axios.post("http://localhost:3002/api/auth/login", values)
+        setUser(response.data)
+
+        console.log("=-============>",response)
+      } catch (error) {
+        console.error(error);
+      }
     console.log('Received values of form: ', values);
     localStorage.setItem("token","token")
     navigate("/upload")
   };
+
+
   return (
     <>
     
