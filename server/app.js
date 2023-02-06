@@ -1,15 +1,19 @@
-const express = require("express");
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import seeders from "./seeders/users.js";
+import router from "./routes/index.js";
 const app = express();
-const mongoose = require("mongoose");
-const bodyParser = require('body-parser');
-const blogRouter = require("./routes/BlogRoutes");
 
 //middleware
 app.use(express.json());
-app.use("/api/blogs", blogRouter);
+app.use("/api", router);
+dotenv.config();
 //configure mongoose
+mongoose.set('strictQuery', false);
+
 mongoose.connect(
-    process.env.MONGODB_URI || "mongodb://localhost/ERP",
+    process.env.MONGODB_URI,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -19,11 +23,11 @@ mongoose.connect(
             console.log(err);
         } else {
             console.log("Connected to MongoDB");
+            seeders();
         }
     }
 );
-app.listen(3001, () => {
-    console.log("Server is running on port 3001");
+app.listen(process.env.PORT, () => {
+    console.log("Server is running on port :", process.env.PORT);
 });
-
-module.exports = app;
+export default app;
