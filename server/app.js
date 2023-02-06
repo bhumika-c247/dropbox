@@ -3,12 +3,14 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import seeders from "./seeders/users.js";
 import router from "./routes/index.js";
+import cors from "cors"
 const app = express();
 
 //middleware
 app.use(express.json());
 app.use("/api", router);
-dotenv.config();
+app.use(cors())
+dotenv.config(); 
 //configure mongoose
 mongoose.set('strictQuery', false);
 
