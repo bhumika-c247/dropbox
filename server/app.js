@@ -15,21 +15,21 @@ dotenv.config();
 mongoose.set('strictQuery', false);
 
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/ERP",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Connected to MongoDB");
-      seeders();
+    process.env.MONGODB_URI,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    },
+    (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Connected to MongoDB");
+            seeders();
+        }
     }
-  }
 );
 app.listen(process.env.PORT, () => {
-  console.log("Server is running on port :",process.env.PORT);
+    console.log("Server is running on port :", process.env.PORT);
 });
-export default  app;
+export default app;
