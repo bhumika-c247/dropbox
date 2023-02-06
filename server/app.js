@@ -4,12 +4,22 @@ import mongoose from "mongoose";
 import seeders from "./seeders/users.js";
 import router from "./routes/index.js";
 import cors from "cors"
-const app = express();
 
+
+const app = express();
+const corsOption = {
+    origin: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+    exposedHeaders: [
+      "x-auth-token",
+      "authorization",
+    ]
+  };
 //middleware
 app.use(express.json());
 app.use("/api", router);
-app.use(cors())
+app.use(cors(corsOption));
 dotenv.config(); 
 //configure mongoose
 mongoose.set('strictQuery', false);
