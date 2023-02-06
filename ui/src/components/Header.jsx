@@ -1,38 +1,38 @@
-import React from 'react';
-import logo from "../img/dropbox.png"
-import { Breadcrumb, Button, Layout, Menu, theme } from 'antd';
-import Fileload from './Fileload';
-
+import React, { useState } from "react";
+import logo from "../img/dropbox.png";
+import { Breadcrumb, Button, Layout, Menu, theme } from "antd";
+import Fileload from "./Fileload";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { Header, Content, Sider } = Layout;
-
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+ 
+  const Logout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
   return (
     <>
       <Layout>
-        <Header className='header'>
-          <div className='logo d-flex justify-content-between align-items-center pt-2' 
-          >
-            <img width="40" src={logo } alt=""/>
-            <Button>Logout</Button>
-           </div>
-          <Menu
-            
-          />
+        <Header className="header">
+          <div className="logo d-flex justify-content-between align-items-center pt-2">
+            <img width="40" src={logo} alt="" />
+            <Button onClick={Logout}>Logout</Button>
+          </div>
+          <Menu />
         </Header>
         <Layout>
           <Sider width={200} style={{ background: colorBgContainer }}>
-           <p className='side-link'>
-           Upload Flies
-           </p>
+            <p className="side-link">Upload Flies</p>
           </Sider>
-          <Layout style={{ padding: '0 24px 24px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
+          <Layout style={{ padding: "0 24px 24px" }}>
+            <Breadcrumb style={{ margin: "16px 0" }}>
               <Breadcrumb.Item>Home</Breadcrumb.Item>
               {/* <Breadcrumb.Item>List</Breadcrumb.Item>
             <Breadcrumb.Item>App</Breadcrumb.Item> */}
