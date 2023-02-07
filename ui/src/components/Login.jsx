@@ -9,16 +9,12 @@ import { useEffect } from "react";
 export const Login = () => {
 	let navigate = useNavigate();
 	const [email, setEmail] = useState(null);
-	const [user, setUser] = useState(null);
 	const [password, setPassword] = useState(null);
+	const baseURL = `http://localhost:3002/api/`;
 
-	const [token, setToken] = useState();
 	const onFinish = async (values) => {
 		try {
-			const response = await axios.post(
-				"http://localhost:3002/api/auth/login",
-				values
-			);
+			const response = await axios.post(`${baseURL}auth/login`, values);
 			if (response?.data) {
 				const { token, user } = response.data;
 				setEmail(response.data.message);
@@ -41,9 +37,10 @@ export const Login = () => {
 
 	useEffect(() => {
 		let token = localStorage.getItem("token");
-		if (!token) {
-			navigate("/");
+		if (token) {
+			navigate("/upload");
 		}
+		// eslint-disable-next-line
 	}, []);
 
 	return (
