@@ -30,6 +30,7 @@ const createFile = async (req, res) => {
 const createSingleFile = async (req, res) => {
   const { file } = req;
   const { userId } = req.body;
+  console.log("filesssss",file)
   try {
     const data = await users.findOneAndUpdate(
       { _id: userId },
@@ -37,7 +38,7 @@ const createSingleFile = async (req, res) => {
         $push: {
           userfiles: {
             name: file.originalname,
-            path: file.path,
+            path: file.filename,
             size: file.size,
             type: file.mimetype,
           },
@@ -96,7 +97,10 @@ const getAllfile = async (req, res) => {
         }
       }
     ]);
-    res.json({userfiles:getAllFiles[0].Items, status: "success" });
+    if(getAllFiles.length){
+      res.json({userfiles:getAllFiles[0].Items, status: "success" });
+    }
+    res.json({userfiles:[], status: "success" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
