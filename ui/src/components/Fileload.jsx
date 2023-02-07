@@ -41,7 +41,7 @@ const Fileload = () => {
 		<>
 			<section className='upload-section'>
 				<Upload
-					// directory
+					directory
 					multiple
 					// openFileDialogOnClick
 					onRemove={remove}

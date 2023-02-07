@@ -28,7 +28,6 @@ const createFile = async (req, res) => {
 };
 const createSingleFile = async (req,res)=>{
   const { file } = req;
-  console.log("=====================>",file)
   const { userId} = req.body
   try {
     const data = await users.findOneAndUpdate(
