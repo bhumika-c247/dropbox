@@ -1,39 +1,39 @@
-import React from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import axios from 'axios';
-import { useEffect } from 'react';
+import React from "react";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Checkbox, Form, Input } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
+import AppConfig from "../AppConfig";
 
 export const Login = () => {
-  let navigate = useNavigate();
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const baseURL = `http://localhost:3002/api/`;
+	let navigate = useNavigate();
+	const [email, setEmail] = useState(null);
+	const [password, setPassword] = useState(null);
 
-  const onFinish = async (values) => {
-    try {
-      const response = await axios.post(`${baseURL}auth/login`, values);
-      if (response?.data) {
-        const { token, user } = response.data;
-        setEmail(response.data.message);
-        setPassword(response.data.message);
-        navigate('/upload');
-        localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-        // setToken(token);
-        // setUser(user)
-        console.log('=-============>', response.data.token);
-      }
-    } catch (error) {
-      console.log('==>', error.response.data.errors.email);
-      console.log('==>', error.response.data.errors.password);
-      setEmail(error.response.data.errors.email);
-      setPassword(error.response.data.errors.password);
-    }
-    console.log('Received values of form: ', values);
-  };
+	const onFinish = async (values) => {
+		try {
+			const response = await axios.post(`${AppConfig.API_ENDPOINT}auth/login`, values);
+			if (response?.data) {
+				const { token, user } = response.data;
+				setEmail(response.data.message);
+				setPassword(response.data.message);
+				navigate("/upload");
+				localStorage.setItem("token", token);
+				localStorage.setItem("user", JSON.stringify(user));
+				// setToken(token);
+				// setUser(user)
+				console.log("=-============>", response.data.token);
+			}
+		} catch (error) {
+			console.log("==>", error.response.data.errors.email);
+			console.log("==>", error.response.data.errors.password);
+			setEmail(error.response.data.errors.email);
+			setPassword(error.response.data.errors.password);
+		}
+		console.log("Received values of form: ", values);
+	};
 
   useEffect(() => {
     let token = localStorage.getItem('token');
