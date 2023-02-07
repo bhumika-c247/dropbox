@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
 	let navigate = useNavigate();
+	let token = localStorage.getItem("token");
+	let userDetails = JSON.parse(localStorage.getItem("user"));
 	const { Header, Content, Sider } = Layout;
 
 	const {
@@ -13,7 +15,6 @@ const Header = () => {
 	} = theme.useToken();
 
 	useEffect(() => {
-		let token = localStorage.getItem("token");
 		if (!token) {
 			navigate("/");
 		}
@@ -24,7 +25,13 @@ const Header = () => {
 				<Header className='header'>
 					<div className='logo d-flex justify-content-between align-items-center pt-2'>
 						<img width='40' src={logo} alt='' />
-						<Button onClick={() => localStorage.removeItem("token")}>
+						{userDetails.firstName}
+						<Button
+							onClick={() => {
+								localStorage.removeItem("token");
+								navigate("/");
+							}}
+						>
 							Logout
 						</Button>
 					</div>
