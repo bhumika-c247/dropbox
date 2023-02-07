@@ -4,32 +4,42 @@ import { Button, Checkbox, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 
 export const Login = () => {
 	let navigate = useNavigate();
-	const [user, setUser] = useState();
+	const [email, setEmail] = useState(null);
+	const [password, setPassword] = useState(null);
 
+	const [token, setToken] = useState();
 	const onFinish = async (values) => {
-		console.log("values-----------", values);
-
 		try {
 			const response = await axios.post(
 				"http://localhost:3002/api/auth/login",
 				values
 			);
-			console.log("res------------------------", response);
-			if (response?.data) {
-				setUser(response.data);
-				localStorage.setItem("token", response.data.token);
-				navigate("/upload");
-			} else {
-				alert();
-			}
+			const { token } = response.data;
+			setEmail(response.data.message);
+			setPassword(response.data.message);
+			localStorage.setItem("token", JSON.stringify(token));
+			setToken(token);
+			console.log("=-============>", response.data.token);
 		} catch (error) {
-			alert("Something went wrong");
+			console.log("==>", error.response.data.errors.email);
+			console.log("==>", error.response.data.errors.password);
+			setEmail(error.response.data.errors.email);
+			setPassword(error.response.data.errors.password);
 		}
-		// console.log("Received values of form: ", values);
+		console.log("Received values of form: ", values);
 	};
+
+	useEffect(() => {
+		if (token) {
+			navigate("/upload");
+		} else {
+			navigate("/");
+		}
+	}, [token, email, password]);
 
 	return (
 		<>
@@ -40,19 +50,17 @@ export const Login = () => {
 				onFinish={onFinish}
 			>
 				<h5 className='login-head'>Login</h5>
-				<Form.Item
-					name='username'
-					rules={[{ required: true, message: "Please input your Username!" }]}
-				>
+				<Form.Item name='email' rules={[{ required: true, message: email }]}>
 					<Input
 						size='large'
 						prefix={<UserOutlined className='site-form-item-icon' />}
 						placeholder='Username'
 					/>
 				</Form.Item>
+				<p>{email}</p>
 				<Form.Item
 					name='password'
-					rules={[{ required: true, message: "Please input your Password!" }]}
+					rules={[{ required: true, message: password }]}
 				>
 					<Input
 						size='large'
@@ -61,6 +69,7 @@ export const Login = () => {
 						placeholder='Password'
 					/>
 				</Form.Item>
+				<p>{password}</p>
 				<Form.Item>
 					<Form.Item name='remember' valuePropName='checked' noStyle>
 						<Checkbox>Remember me</Checkbox>
