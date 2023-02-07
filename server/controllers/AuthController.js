@@ -27,6 +27,7 @@ import {encode,decode} from "../utils/jwt.js"
         return res.status(200).json(
           {
             message: "User login successfully ",
+            user:user,
             token: `Bearer ${await encode({
               id: user._id,
             })}`
