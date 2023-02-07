@@ -84,7 +84,7 @@ const Fileload = () => {
 
 	return (
 		<>
-			<h2>Upload files/folder:</h2>
+			<h5>Upload files/folder:</h5>
 			<section className='upload-section d-flex justify-content-center'>
 				<p>{isLoading ? "loading..." : ""}</p>
 				<Upload

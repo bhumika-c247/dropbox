@@ -19,7 +19,7 @@
 }
 
 .upload-section{
-  width:70%;
+
   margin: 0 auto;
   border: 2px solid orange;
   padding:2rem 3rem 8rem 3rem;
@@ -38,8 +38,8 @@
 
 .ant-upload-list {
   position: relative;
-  left: 3rem;
-  width:150%;
+  
+  width:200%;
   padding-top: 2rem;
 }
 

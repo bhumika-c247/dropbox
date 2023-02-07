@@ -42,7 +42,7 @@ const Header = () => {
 				</Header>
 				<Layout>
 					<Sider width={200} style={{ background: colorBgContainer }}>
-						<p className='side-link'>Upload Flies</p>
+						<p className='side-link'>Upload Files</p>
 					</Sider>
 					<Layout style={{ padding: "0 24px 24px" }}>
 						<Breadcrumb style={{ margin: "16px 0" }}>
