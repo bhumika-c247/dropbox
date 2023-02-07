@@ -12,7 +12,7 @@ const Fileload = () => {
 	const remove = async (value) => {
 		console.log("remove called", value);
 		try {
-			const response = await axios.post(`${baseURL}auth/deleteFile`, {
+			const response = await axios.post(`${baseURL}user/deleteFile`, {
 				fileId: value._id,
 				userId: userDetails._id,
 			});
@@ -44,7 +44,7 @@ const Fileload = () => {
 	const getFiles = async () => {
 		setIsLoading(true);
 		try {
-			const response = await axios.post(`${baseURL}auth/getAllFile`, {
+			const response = await axios.post(`${baseURL}user/getAllFile`, {
 				userId: userDetails._id,
 			});
 			const { data } = response;
