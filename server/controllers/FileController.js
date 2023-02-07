@@ -97,7 +97,10 @@ const getAllfile = async (req, res) => {
         }
       }
     ]);
-    res.json({userfiles:getAllFiles[0].Items, status: "success" });
+    if(getAllFiles.length){
+      res.json({userfiles:getAllFiles[0].Items, status: "success" });
+    }
+    res.json({userfiles:[], status: "success" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -15,7 +15,7 @@ const Fileload = () => {
 		console.log("remove called", value);
 		try {
 			const response = await axios.post(`${baseURL}user/deleteFile`, {
-				fileId: value._id,
+				fileId: value.uid,
 				userId: userDetails._id,
 			});
 			// remove from states here
