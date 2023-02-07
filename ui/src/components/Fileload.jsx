@@ -13,12 +13,13 @@ const Fileload = () => {
 		console.log("remove called");
 	};
 	const onSubmit = async (value) => {
-		console.log("val", value);
+		console.log("val", value.fileList);
 		try {
 			let formData = new FormData();
 			formData.append("files", value.file);
 			const response = await axios.post(
-				"http://localhost:3002/api/auth/upload",
+				"http://localhost:3002/api/user/singleFileUpload",
+				// {file:JSON.stringify(value.file),userId:"63e1d610514403a2e5ec4fb7"}
 				formData
 			);
 			console.log("res------------------------", response);
@@ -38,7 +39,7 @@ const Fileload = () => {
 		<>
 			<section className='upload-section'>
 				<Upload
-					directory
+					// directory
 					multiple
 					// openFileDialogOnClick
 					onRemove={remove}
