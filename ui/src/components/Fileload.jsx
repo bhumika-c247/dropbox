@@ -56,9 +56,10 @@ const Fileload = () => {
 				{ userId: userDetails._id }
 			);
 			const { data } = response;
-			if (data && data.data && data.data[0]) {
+			console.log("resssss", response);
+			if (data && data.userfiles) {
 				setIsLoading(false);
-				setFileList(data?.data[0]?.userfiles);
+				setFileList(data.userfiles);
 			}
 		} catch (error) {
 			// alert("Something went wrong");
@@ -109,22 +110,19 @@ const Fileload = () => {
 					// onChange={(response) => handleChange(response)}
 					customRequest={onSubmit}
 				>
-					
 					<div className='d-flex justify-content-center'>
 						<Button icon={<UploadOutlined />}>Upload Files/Folder</Button>
 					</div>
 				</Upload>
 
 				<Upload
-					
 					multiple
-					showUploadList = {false}
+					showUploadList={false}
 					// openFileDialogOnClick
 					onRemove={remove}
 					// onChange={(response) => handleChange(response)}
 					customRequest={onSubmit}
 				>
-					
 					<div className='d-flex justify-content-center'>
 						<Button icon={<UploadOutlined />}>Upload Files/Folder</Button>
 					</div>
