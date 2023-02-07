@@ -63,8 +63,12 @@ const Fileload = () => {
 				});
 				setFileList(temp);
 			}
+			else{
+				setIsLoading(false);
+			}
 		} catch (error) {
 			// alert("Something went wrong");
+			setIsLoading(false);
 		}
 	};
 
