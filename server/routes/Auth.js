@@ -14,23 +14,23 @@ const authRouter = express.Router();
 authRouter.post("/login", LoginValidation, handleValidationErrors, AuthController.login)
 
 
-// route for file upload
-const uploadPath = path.join(__dirname, "..", "/server/uploads");
-fs.ensureDirSync(uploadPath); // sure that path is exiting or not 
-const storage = multer.diskStorage({
-  destination: uploadPath,
-  filename: function (req, file, cb) {
-    try {
-      cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname))
-    } catch (err) {
-      console.log("e0rror")
-    }
-  }
-})
-const upload = multer({ storage: storage })
-authRouter.post('/upload', upload.array("uploadFiles", 100), FileController.createFile)
-authRouter.post('/deleteFile', FileController.deleteFile)
-authRouter.post('/getAllFile', FileController.getAllfile)
+// // route for file upload
+// const uploadPath = path.join(__dirname, "..", "/server/uploads");
+// fs.ensureDirSync(uploadPath); // sure that path is exiting or not 
+// const storage = multer.diskStorage({
+//   destination: uploadPath,
+//   filename: function (req, file, cb) {
+//     try {
+//       cb(null, file.fieldname + '_' + Date.now() + path.extname(file.originalname))
+//     } catch (err) {
+//       console.log("e0rror")
+//     }
+//   }
+// })
+// const upload = multer({ storage: storage })
+// authRouter.post('/upload', upload.array("uploadFiles", 100), FileController.createFile)
+// authRouter.post('/deleteFile', FileController.deleteFile)
+// authRouter.post('/getAllFile', FileController.getAllfile)
 
 
 
