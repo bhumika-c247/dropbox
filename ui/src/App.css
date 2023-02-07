@@ -25,6 +25,7 @@
   padding:2rem 3rem 8rem 3rem;
   margin-top: 2rem;
   text-align: center;
+  position: relative;
 }
 .upload-section h3{
   margin: 1rem 0px 4rem 0px;
@@ -33,4 +34,21 @@
 .login-head{
   text-align: center;
   margin: 0rem 0px 3rem 0px;
+}
+
+.ant-upload-list {
+  position: relative;
+  left: 3rem;
+  width:150%;
+  padding-top: 2rem;
+}
+
+.upload-section p{
+  position: absolute;
+  left: 21rem;
+  top: 8rem;
+}
+.user-profile{
+padding-right: 1rem;
+color: white;
 }

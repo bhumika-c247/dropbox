@@ -99,8 +99,8 @@ const Fileload = () => {
 	};
 	return (
 		<>
-			<section className='upload-section d-flex'>
-				{isLoading ? "loading..." : ""}
+			<section className='upload-section d-flex justify-content-center'>
+				<p>{isLoading ? "loading..." : ""}</p>
 				<Upload
 					directory
 					multiple
@@ -111,7 +111,7 @@ const Fileload = () => {
 					customRequest={onSubmit}
 				>
 					<div className='d-flex justify-content-center'>
-						<Button icon={<UploadOutlined />}>Upload Files/Folder</Button>
+						<Button icon={<UploadOutlined />}>Upload Folder</Button>
 					</div>
 				</Upload>
 
@@ -124,7 +124,7 @@ const Fileload = () => {
 					customRequest={onSubmit}
 				>
 					<div className='d-flex justify-content-center'>
-						<Button icon={<UploadOutlined />}>Upload Files/Folder</Button>
+						<Button icon={<UploadOutlined />}>Upload Files</Button>
 					</div>
 				</Upload>
 			</section>

@@ -23,9 +23,10 @@ const Header = () => {
 		<>
 			<Layout>
 				<Header className='header'>
-					<div className='logo d-flex justify-content-between align-items-center pt-2'>
+					<div className='logo d-flex justify-content-between align-items-center '>
 						<img width='40' src={logo} alt='' />
-						{userDetails.firstName}
+						<div>
+						<span className='user-profile'>{userDetails.firstName}</span>
 						<Button
 							onClick={() => {
 								localStorage.removeItem("token");
@@ -34,6 +35,7 @@ const Header = () => {
 						>
 							Logout
 						</Button>
+						</div>
 					</div>
 					<Menu />
 				</Header>
