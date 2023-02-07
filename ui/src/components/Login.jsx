@@ -5,16 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import AppConfig from "../AppConfig";
 
 export const Login = () => {
 	let navigate = useNavigate();
 	const [email, setEmail] = useState(null);
 	const [password, setPassword] = useState(null);
-	const baseURL = `http://localhost:3002/api/`;
 
 	const onFinish = async (values) => {
 		try {
-			const response = await axios.post(`${baseURL}auth/login`, values);
+			const response = await axios.post(`${AppConfig.API_ENDPOINT}auth/login`, values);
 			if (response?.data) {
 				const { token, user } = response.data;
 				setEmail(response.data.message);
