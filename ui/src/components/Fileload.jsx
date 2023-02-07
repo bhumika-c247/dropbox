@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Upload } from "antd";
 import axios from "axios";
-const baseURL = `http://localhost:3002/api/`;
-const ImageURL = `http://localhost:3002/`;
-
+import AppConfig from "../AppConfig";
 
 const Fileload = () => {
 	let userDetails = JSON.parse(localStorage.getItem("user"));
@@ -14,12 +12,14 @@ const Fileload = () => {
 	const remove = async (value) => {
 		console.log("remove called", value);
 		try {
-			const response = await axios.post(`${baseURL}user/deleteFile`, {
-				fileId: value.uid,
-				userId: userDetails._id,
-			});
+			const response = await axios.post(
+				`${AppConfig.API_ENDPOINT}user/deleteFile`,
+				{
+					fileId: value.uid,
+					userId: userDetails._id,
+				}
+			);
 			// remove from states here
-
 
 			if (response.status === 200) {
 				getFiles();
@@ -35,7 +35,7 @@ const Fileload = () => {
 			formData.append("files", value.file);
 			formData.append("userId", userDetails._id);
 			const response = await axios.post(
-				`${baseURL}user/singleFileUpload`,
+				`${AppConfig.API_ENDPOINT}user/singleFileUpload`,
 				formData
 			);
 			if (response.status === 200) {
@@ -47,14 +47,17 @@ const Fileload = () => {
 	};
 
 	const getFiles = async () => {
-		let temp = [];
+		// let temp = [];
 
 		try {
-			const response = await axios.post(`${baseURL}user/getAllFile`, {
-				userId: userDetails._id,
-			});
+			const response = await axios.post(
+				`${AppConfig.API_ENDPOINT}user/getAllFile`,
+				{
+					userId: userDetails._id,
+				}
+			);
 			const { data } = response;
-			const temp = []
+			const temp = [];
 			console.log("resssss", response);
 			if (data && data.userfiles) {
 				setIsLoading(false);
@@ -64,7 +67,7 @@ const Fileload = () => {
 						uid: item._id,
 						name: item.name,
 						status: "done",
-						url: `${ImageURL}${item.path}`,
+						url: `${AppConfig.FILES_ENDPOINT}${item.path}`,
 					});
 				});
 				setFileList(temp);
