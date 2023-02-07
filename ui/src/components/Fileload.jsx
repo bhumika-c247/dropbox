@@ -92,7 +92,7 @@ const Fileload = () => {
 	};
 	return (
 		<>
-			<section className='upload-section d-flex justify-content-around'>
+			<section className='upload-section'>
 				<Upload
 					directory
 					multiple
@@ -102,19 +102,9 @@ const Fileload = () => {
 					// onChange={(response) => handleChange(response)}
 					customRequest={onSubmit}
 				>
+					<h3>Drag/drop or click to upload files</h3>
 					<div className='d-flex justify-content-center'>
-						<Button icon={<UploadOutlined />}>Upload Folder</Button>
-					</div>
-				</Upload>
-				<Upload
-					multiple
-					// openFileDialogOnClick
-					onRemove={remove}
-					onChange={(response) => load(response)}
-					// customRequest={onSubmitfile}
-				>
-					<div className='d-flex justify-content-center'>
-						<Button icon={<UploadOutlined />}>Upload Files</Button>
+						<Button icon={<UploadOutlined />}>Upload Files/Folder</Button>
 					</div>
 				</Upload>
 			</section>
