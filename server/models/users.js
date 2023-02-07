@@ -15,6 +15,8 @@ const UserModelSchema = new Schema({
       path: { type: Schema.Types.String, required: false },
       size: { type: Schema.Types.Number, required: false },
       type: { type: Schema.Types.String, required: false },
+      createdFileAt: { type: Date, default: Date.now },
+
     }),
   ],
   createdAt: { type: Date, default: Date.now },

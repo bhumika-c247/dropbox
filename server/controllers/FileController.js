@@ -1,7 +1,8 @@
+import mongoose from "mongoose";
 import users from "../models/users.js";
 const createFile = async (req, res) => {
   const { files } = req;
-  const {userId} = req.body
+  const { userId } = req.body;
   const multifile = [];
   files.forEach((ele) => {
     multifile.push({
@@ -26,9 +27,9 @@ const createFile = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-const createSingleFile = async (req,res)=>{
+const createSingleFile = async (req, res) => {
   const { file } = req;
-  const { userId} = req.body
+  const { userId } = req.body;
   try {
     const data = await users.findOneAndUpdate(
       { _id: userId },
@@ -48,9 +49,9 @@ const createSingleFile = async (req,res)=>{
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-}
+};
 const deleteFile = async (req, res) => {
-  const {userId,fileId} = req.body
+  const { userId, fileId } = req.body;
 
   try {
     const deletedData = await users.findOneAndUpdate(
@@ -64,10 +65,38 @@ const deleteFile = async (req, res) => {
   }
 };
 const getAllfile = async (req, res) => {
-  const { userId } = req.body
+  const { userId } = req.body;
   try {
     const allFiles = await users.find({ _id: userId });
-    res.json({ data: allFiles, status: "success" });
+
+    const getAllFiles = await users.aggregate([
+      {
+        $match: { _id: mongoose.Types.ObjectId(userId) },
+      },
+      {
+        "$unwind": "$userfiles"
+     },
+     {
+        "$sort": {
+            "userfiles.createdFileAt": -1
+        }
+    },
+     {
+        "$group": {
+            "Items": {
+                "$push": "$userfiles"
+            },
+            "_id": 1
+        }
+    }, 
+    {
+        "$project": {
+            "_id": 0,
+            "Items": 1
+        }
+      }
+    ]);
+    res.json({userfiles:getAllFiles[0].Items, status: "success" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
