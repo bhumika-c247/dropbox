@@ -1,54 +1,63 @@
-
-.custom-form{
-  width:40%;
-  margin:  5rem  auto;
+.custom-form {
+  width: 40%;
+  margin: 5rem auto;
   border: 2px solid orange;
   border-radius: 10px;
   padding: 3rem;
-  
 }
-.side-link{
+.side-link {
   text-align: center;
-  background-color:#001529 ;
+  background-color: #001529;
   margin-top: 1rem;
   padding: 1rem;
   color: white;
   cursor: pointer;
   font-weight: bold;
-  
 }
 
-.upload-section{
-
+.upload-section {
   margin: 0 auto;
   border: 2px solid orange;
-  padding:2rem 3rem 8rem 3rem;
+  padding: 2rem 3rem 8rem 3rem;
   margin-top: 2rem;
   text-align: center;
   position: relative;
+  display: flex;
+  justify-content: center;
 }
-.upload-section h3{
+.upload-section h3 {
   margin: 1rem 0px 4rem 0px;
   text-align: center;
 }
-.login-head{
+.login-head {
   text-align: center;
   margin: 0rem 0px 3rem 0px;
 }
 
 .ant-upload-list {
   position: relative;
-  
-  width:200%;
+
+  width: 200%;
   padding-top: 2rem;
 }
 
-.upload-section p{
+.upload-section p {
   position: absolute;
   left: 21rem;
   top: 8rem;
 }
-.user-profile{
-padding-right: 1rem;
-color: white;
+.user-profile {
+  padding-right: 1rem;
+  margin-left: 1rem;
+  color: white;
+}
+
+.logo-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.upload_wrapper {
+  display: flex;
+  justify-content: center;
 }
