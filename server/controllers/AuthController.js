@@ -34,7 +34,8 @@ import {encode,decode} from "../utils/jwt.js"
           }
         );
       }
+
 const AuthController = {
-    login
-  }
-  export default AuthController;
+  login
+}
+export default AuthController;

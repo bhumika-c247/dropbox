@@ -64,7 +64,7 @@ const deleteFile = async (req, res) => {
   }
 };
 const getAllfile = async (req, res) => {
-  const {userId} =req.body
+  const { userId } = req.body
   try {
     const allFiles = await users.find({ _id: userId });
     res.json({ data: allFiles, status: "success" });
