@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "../img/dropbox.png";
 import { Breadcrumb, Button, Layout, Menu, theme } from "antd";
 import Fileload from "./Fileload";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+	let navigate = useNavigate();
 	const { Header, Content, Sider } = Layout;
 
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
 
+	useEffect(() => {
+		let token = localStorage.get("token");
+		if (!token) {
+			navigate("/");
+		}
+	}, []);
 	return (
 		<>
 			<Layout>

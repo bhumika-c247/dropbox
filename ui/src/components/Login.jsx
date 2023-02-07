@@ -18,12 +18,15 @@ export const Login = () => {
 				"http://localhost:3002/api/auth/login",
 				values
 			);
-			const { token } = response.data;
-			setEmail(response.data.message);
-			setPassword(response.data.message);
-			localStorage.setItem("token", JSON.stringify(token));
-			setToken(token);
-			console.log("=-============>", response.data.token);
+			if (response?.data) {
+				const { token } = response.data;
+				setEmail(response.data.message);
+				setPassword(response.data.message);
+				navigate("/");
+				localStorage.setItem("token", JSON.stringify(token));
+				setToken(token);
+				console.log("=-============>", response.data.token);
+			}
 		} catch (error) {
 			console.log("==>", error.response.data.errors.email);
 			console.log("==>", error.response.data.errors.password);
@@ -34,9 +37,7 @@ export const Login = () => {
 	};
 
 	useEffect(() => {
-		if (token) {
-			navigate("/upload");
-		} else {
+		if (!token) {
 			navigate("/");
 		}
 	}, [token, email, password]);
