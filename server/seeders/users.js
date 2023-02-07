@@ -3,13 +3,13 @@ import bcryptjs from "bcryptjs";
 import user from "../models/users.js";
 const seedUsers = async () => {
     const existingUsers = await user.find({});
-    const existingAdminUsers = await user.findOne({email:"admin@gmail.com"})
+    const existingAdminUsers = await user.findOne({email:"chapter247@gmail.com"})
     if(!existingAdminUsers){
       const admin = await user.create({
-        email:"admin@gmail.com",
-        firstName: "admin",
-          lastName: "user",
-          password: bcryptjs.hashSync("password", 10), 
+        email:"chapter247@gmail.com",
+        firstName: "chapter",
+          lastName: "247",
+          password: bcryptjs.hashSync("123456", 10), 
   
       })
       console.log("created admin details :", admin)
