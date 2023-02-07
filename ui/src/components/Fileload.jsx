@@ -3,6 +3,8 @@ import { UploadOutlined } from "@ant-design/icons";
 import { Button, Upload } from "antd";
 import axios from "axios";
 const baseURL = `http://localhost:3002/api/`;
+const ImageURL = `http://localhost:3002/`;
+
 
 const Fileload = () => {
 	let userDetails = JSON.parse(localStorage.getItem("user"));
@@ -16,6 +18,9 @@ const Fileload = () => {
 				fileId: value._id,
 				userId: userDetails._id,
 			});
+			// remove from states here
+
+
 			if (response.status === 200) {
 				getFiles();
 			}
@@ -48,10 +53,20 @@ const Fileload = () => {
 				userId: userDetails._id,
 			});
 			const { data } = response;
+			const temp = []
 			console.log("resssss", response);
 			if (data && data.userfiles) {
 				setIsLoading(false);
-				setFileList(data.userfiles);
+				data.userfiles.map((item) => {
+					console.log("tem", item);
+					return temp.push({
+						uid: item._id,
+						name: item.name,
+						status: "done",
+						url: `${ImageURL}${item.path}`,
+					});
+				});
+				setFileList(temp);
 			}
 		} catch (error) {
 			// alert("Something went wrong");

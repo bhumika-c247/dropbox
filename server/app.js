@@ -5,6 +5,9 @@ import seeders from "./seeders/users.js";
 import router from "./routes/index.js";
 import cors from "cors"
 import bodyParser from "body-parser";
+import path from 'path';
+const __dirname = path.resolve();
+
 const app = express();
 dotenv.config(); 
 
@@ -41,6 +44,9 @@ app.use(cors(corsOption));
 app.use(express.json());
 app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: false }))
+app.use("/",express.static(path.join(__dirname, 'uploads')));
+
+// app.use("/", express.static(path.resolve(__dirname + '/uploads')))
 app.use("/api", router);
 //configure mongoose
 
