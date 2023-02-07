@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Upload } from "antd";
 import axios from "axios";
@@ -6,13 +6,27 @@ import axios from "axios";
 const Fileload = () => {
 	let userDetails = JSON.parse(localStorage.getItem("user"));
 	const [files, setFiles] = useState([]);
+	const [fileList, setFileList] = useState([]);
 	const load = (value) => {
 		setFiles(value.fileList);
 	};
 
-	const remove = (value) => {
-		console.log("remove called");
+	const remove = async (value) => {
+		console.log("remove called", value);
+		try {
+			const response = await axios.post(
+				"http://localhost:3002/api/auth/deleteFile",
+				{ fileId: value._id, userId: userDetails._id }
+			);
+			if (response.status === 200) {
+				getFiles();
+			}
+			console.log("res------------------------", response);
+		} catch (error) {
+			// alert("Something went wrong");
+		}
 	};
+
 	const onSubmit = async (value) => {
 		console.log("val", value.fileList);
 		try {
@@ -21,21 +35,60 @@ const Fileload = () => {
 			formData.append("userId", userDetails._id);
 			const response = await axios.post(
 				"http://localhost:3002/api/user/singleFileUpload",
-				// {file:JSON.stringify(value.file),userId:"63e1d610514403a2e5ec4fb7"}
 				formData
 			);
 			console.log("res------------------------", response);
-			// if (response?.data) {
-			// 	setUser(response.data);
-			// 	localStorage.setItem("token", response.data.token);
-			// 	navigate("/upload");
-			// } else {
-			// 	alert();
-			// }
 		} catch (error) {
 			// alert("Something went wrong");
 		}
 		console.log("files", files);
+	};
+
+	const getFiles = async () => {
+		try {
+			const response = await axios.post(
+				"http://localhost:3002/api/auth/getAllFile",
+				{ userId: userDetails._id }
+			);
+			const { data } = response;
+			if (data && data.data && data.data[0]) {
+				setFileList(data?.data[0]?.userfiles);
+			}
+		} catch (error) {
+			// alert("Something went wrong");
+		}
+	};
+
+	useEffect(() => {
+		getFiles();
+	}, []);
+
+	// const [fileList, setFileList] = useState([
+	// 	{
+	// 		uid: "-1",
+	// 		name: "xxx.png",
+	// 		status: "done",
+	// 		url: "http://www.baidu.com/xxx.png",
+	// 	},
+	// ]);
+
+	const handleChange = (info) => {
+		let newFileList = [...info.fileList];
+
+		// 1. Limit the number of uploaded files
+		// Only to show two recent uploaded files, and old ones will be replaced by the new
+		newFileList = newFileList.slice(-2);
+
+		// 2. Read from response and show file link
+		newFileList = newFileList.map((file) => {
+			if (file.response) {
+				// Component will show file.url as link
+				file.url = file.response.url;
+			}
+			return file;
+		});
+
+		setFileList(newFileList);
 	};
 	return (
 		<>
@@ -43,9 +96,10 @@ const Fileload = () => {
 				<Upload
 					directory
 					multiple
+					fileList={fileList}
 					// openFileDialogOnClick
 					onRemove={remove}
-					onChange={(response) => load(response)}
+					// onChange={(response) => handleChange(response)}
 					customRequest={onSubmit}
 				>
 					<h3>Drag/drop or click to upload files</h3>
