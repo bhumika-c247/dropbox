@@ -7,6 +7,7 @@ const Fileload = () => {
 	let userDetails = JSON.parse(localStorage.getItem("user"));
 	const [files, setFiles] = useState([]);
 	const [fileList, setFileList] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 	const load = (value) => {
 		setFiles(value.fileList);
 	};
@@ -37,6 +38,9 @@ const Fileload = () => {
 				"http://localhost:3002/api/user/singleFileUpload",
 				formData
 			);
+			if (response.status === 200) {
+				getFiles();
+			}
 			console.log("res------------------------", response);
 		} catch (error) {
 			// alert("Something went wrong");
@@ -45,6 +49,7 @@ const Fileload = () => {
 	};
 
 	const getFiles = async () => {
+		setIsLoading(true);
 		try {
 			const response = await axios.post(
 				"http://localhost:3002/api/auth/getAllFile",
@@ -52,6 +57,7 @@ const Fileload = () => {
 			);
 			const { data } = response;
 			if (data && data.data && data.data[0]) {
+				setIsLoading(false);
 				setFileList(data?.data[0]?.userfiles);
 			}
 		} catch (error) {
@@ -93,6 +99,7 @@ const Fileload = () => {
 	return (
 		<>
 			<section className='upload-section'>
+				{isLoading ? "loading..." : ""}
 				<Upload
 					directory
 					multiple
