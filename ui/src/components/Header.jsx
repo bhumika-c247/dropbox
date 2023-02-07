@@ -13,7 +13,7 @@ const Header = () => {
 	} = theme.useToken();
 
 	useEffect(() => {
-		let token = localStorage.get("token");
+		let token = localStorage.getItem("token");
 		if (!token) {
 			navigate("/");
 		}
@@ -24,7 +24,9 @@ const Header = () => {
 				<Header className='header'>
 					<div className='logo d-flex justify-content-between align-items-center pt-2'>
 						<img width='40' src={logo} alt='' />
-						<Button onClick={localStorage.removeItem("token")}>Logout</Button>
+						<Button onClick={() => localStorage.removeItem("token")}>
+							Logout
+						</Button>
 					</div>
 					<Menu />
 				</Header>

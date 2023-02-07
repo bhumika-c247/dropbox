@@ -4,6 +4,7 @@ import { Button, Upload } from "antd";
 import axios from "axios";
 
 const Fileload = () => {
+	let userDetails = JSON.parse(localStorage.getItem("user"));
 	const [files, setFiles] = useState([]);
 	const load = (value) => {
 		setFiles(value.fileList);
@@ -17,6 +18,7 @@ const Fileload = () => {
 		try {
 			let formData = new FormData();
 			formData.append("files", value.file);
+			formData.append("userId", userDetails._id);
 			const response = await axios.post(
 				"http://localhost:3002/api/user/singleFileUpload",
 				// {file:JSON.stringify(value.file),userId:"63e1d610514403a2e5ec4fb7"}

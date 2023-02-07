@@ -9,6 +9,7 @@ import { useEffect } from "react";
 export const Login = () => {
 	let navigate = useNavigate();
 	const [email, setEmail] = useState(null);
+	const [user, setUser] = useState(null);
 	const [password, setPassword] = useState(null);
 
 	const [token, setToken] = useState();
@@ -19,12 +20,14 @@ export const Login = () => {
 				values
 			);
 			if (response?.data) {
-				const { token } = response.data;
+				const { token, user } = response.data;
 				setEmail(response.data.message);
 				setPassword(response.data.message);
-				navigate("/");
-				localStorage.setItem("token", JSON.stringify(token));
-				setToken(token);
+				navigate("/upload");
+				localStorage.setItem("token", token);
+				localStorage.setItem("user", JSON.stringify(user));
+				// setToken(token);
+				// setUser(user)
 				console.log("=-============>", response.data.token);
 			}
 		} catch (error) {
@@ -37,10 +40,11 @@ export const Login = () => {
 	};
 
 	useEffect(() => {
+		let token = localStorage.getItem("token");
 		if (!token) {
 			navigate("/");
 		}
-	}, [token, email, password]);
+	}, []);
 
 	return (
 		<>
