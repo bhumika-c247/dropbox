@@ -1,28 +1,46 @@
 import users from "../models/users.js";
 const createFile = async (req, res) => {
-  const { files } = req;
-  const multifile = [];
-  files.forEach((ele) => {
-    multifile.push({
-      name: ele.originalname,
-      path: ele.filename,
-      size: ele.size,
-      type: ele.mimetype,
-    });
-  });
   try {
-    const data = await users.findOneAndUpdate(
-      { _id: "63e10833667516a77a5e3141" },
-      {
-        $push: {
-          userfiles: { $each: multifile },
-        },
-      },
-      { new: true }
-    );
-    res.json({ data: data, status: "success" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const id = req.params.id;
+    const { body } = req;
+    let condition = {
+      _id: id, isDeleted: false
+    }
+    const user = await users.findOne(condition);
+    if (!user) {
+      return res.status(404).json({
+        message: message.INVOICE_NOT_FOUND
+      });
+    }
+    let fileUploads = []
+    let oldFilesArray = []
+    if (user && user.fileUploads.length > 0) {
+      //Itrate user files
+      for (let j = 0; j < user.fileUploads.length; j++) {
+        oldFilesArray.push(user.fileUploads[j])
+      }
+    }
+    if (req.files.length > 0) {
+      for (let index = 0; index < req.files.length; index++) {
+        fileUploads.push(req.files[index].location);
+      }
+    }
+    if (oldFilesArray.length > 0) {
+      for (let index = 0; index < oldFilesArray.length; index++) {
+        fileUploads.push(oldFilesArray[index]);
+      }
+    }
+    let updateData = {
+      fileUploads,
+    }
+    // body.fileUploads = fileUploads
+    await users.updateOne({ _id: id }, { $set: updateData })
+    return res.status(200).json({ message: "Updated" });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message ? error.message : message.ERROR_MESSAGE,
+    });
   }
 };
 const deleteFile = async (req, res) => {
@@ -38,7 +56,7 @@ const deleteFile = async (req, res) => {
   }
 };
 const getAllfile = async (req, res) => {
-  const {userId} =req.body
+  const { userId } = req.body
   try {
     const allFiles = await users.find({ _id: userId });
     res.json({ data: allFiles, status: "success" });

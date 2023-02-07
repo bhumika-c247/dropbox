@@ -1,28 +1,58 @@
-import React from 'react';
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, Upload } from 'antd';
+import React, { useState } from "react";
+import { UploadOutlined } from "@ant-design/icons";
+import { Button, Upload } from "antd";
+import axios from "axios";
 
-const Fileload = (value) => {
-  const load = () => {
-    console.log('load is callled ',value);
-  };
+const Fileload = () => {
+	const [files, setFiles] = useState([]);
+	const load = (value) => {
+		setFiles(value.fileList);
+	};
 
-  const remove=()=>{
-console.log("remove called",)
-  }
-
-  return (
-    <>
-    <section className='upload-section'>
-      <Upload action={(e)=>load(e)} directory openFileDialogOnClick onRemove={remove}>
-        <h3>Drag/drop or click to upload files</h3>
-        <div className='d-flex justify-content-center'>
-        <Button icon={<UploadOutlined />}>Upload Files/Folder</Button>
-        </div>
-      </Upload>
-      </section>
-    </>
-  );
+	const remove = (value) => {
+		console.log("remove called");
+	};
+	const onSubmit = async (value) => {
+		console.log("val", value);
+		try {
+			let formData = new FormData();
+			formData.append("files", value.file);
+			const response = await axios.post(
+				"http://localhost:3002/api/auth/upload",
+				formData
+			);
+			console.log("res------------------------", response);
+			// if (response?.data) {
+			// 	setUser(response.data);
+			// 	localStorage.setItem("token", response.data.token);
+			// 	navigate("/upload");
+			// } else {
+			// 	alert();
+			// }
+		} catch (error) {
+			// alert("Something went wrong");
+		}
+		console.log("files", files);
+	};
+	return (
+		<>
+			<section className='upload-section'>
+				<Upload
+					directory
+					multiple
+					// openFileDialogOnClick
+					onRemove={remove}
+					onChange={(response) => load(response)}
+					customRequest={onSubmit}
+				>
+					<h3>Drag/drop or click to upload files</h3>
+					<div className='d-flex justify-content-center'>
+						<Button icon={<UploadOutlined />}>Upload Files/Folder</Button>
+					</div>
+				</Upload>
+			</section>
+		</>
+	);
 };
 
 export default Fileload;
