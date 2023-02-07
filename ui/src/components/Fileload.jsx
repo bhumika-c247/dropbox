@@ -9,7 +9,7 @@ const ImageURL = `http://localhost:3002/`;
 const Fileload = () => {
 	let userDetails = JSON.parse(localStorage.getItem("user"));
 	const [fileList, setFileList] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const remove = async (value) => {
 		console.log("remove called", value);
@@ -47,7 +47,8 @@ const Fileload = () => {
 	};
 
 	const getFiles = async () => {
-		setIsLoading(true);
+		let temp=[]
+		
 		try {
 			const response = await axios.post(`${baseURL}user/getAllFile`, {
 				userId: userDetails._id,
@@ -68,8 +69,12 @@ const Fileload = () => {
 				});
 				setFileList(temp);
 			}
+			else{
+				setIsLoading(false);
+			}
 		} catch (error) {
 			// alert("Something went wrong");
+			setIsLoading(false);
 		}
 	};
 
