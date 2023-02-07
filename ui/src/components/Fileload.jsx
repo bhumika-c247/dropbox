@@ -42,8 +42,8 @@ const Fileload = () => {
 	};
 
 	const getFiles = async () => {
-		let temp=[]
-		
+		let temp = [];
+
 		try {
 			const response = await axios.post(`${baseURL}user/getAllFile`, {
 				userId: userDetails._id,
@@ -62,8 +62,7 @@ const Fileload = () => {
 					});
 				});
 				setFileList(temp);
-			}
-			else{
+			} else {
 				setIsLoading(false);
 			}
 		} catch (error) {
@@ -79,6 +78,7 @@ const Fileload = () => {
 
 	return (
 		<>
+			<h2>Upload files/folder:</h2>
 			<section className='upload-section d-flex justify-content-center'>
 				<p>{isLoading ? "loading..." : ""}</p>
 				<Upload
