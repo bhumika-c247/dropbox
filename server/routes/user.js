@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
     }
   })
 const upload =multer({storage:storage})
-userRouter.post('/singleFileUpload',upload.single("file"), FileController.createSingleFile)
+userRouter.post('/singleFileUpload',upload.single("files"), FileController.createSingleFile)
 
 
 export default userRouter;

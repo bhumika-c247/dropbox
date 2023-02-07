@@ -5,10 +5,10 @@ const createFile = async (req, res) => {
   const multifile = [];
   files.forEach((ele) => {
     multifile.push({
-      name: ele.originalname,
-      path: ele.filename,
+      name: ele.name,
+      path: ele.webkitRelativePath,
       size: ele.size,
-      type: ele.mimetype,
+      type: ele.type,
     });
   });
   try {
@@ -28,6 +28,7 @@ const createFile = async (req, res) => {
 };
 const createSingleFile = async (req,res)=>{
   const { file } = req;
+  console.log("=====================>",file)
   const { userId} = req.body
   try {
     const data = await users.findOneAndUpdate(
@@ -36,7 +37,7 @@ const createSingleFile = async (req,res)=>{
         $push: {
           userfiles: {
             name: file.originalname,
-            path: file.filename,
+            path: file.path,
             size: file.size,
             type: file.mimetype,
           },
